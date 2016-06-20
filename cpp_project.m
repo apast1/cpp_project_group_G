@@ -55,3 +55,4 @@ delta_y2=delta_y;
 
 Vext = (delta_y1^4*V2 - delta_y2^4*V1) / (delta_y1^4 - delta_y2^4)
 
+% [Call, Put] = blsprice(S_0, X, r, T, sig, Dc)
