@@ -1,4 +1,4 @@
-function [val,error] =QUAD_ext(S_0,r,sig,X,T,Dc,K)
+function [val,error] =QUAD(S_0,r,sig,X,T,Dc,K)
 
 
 t=0;
