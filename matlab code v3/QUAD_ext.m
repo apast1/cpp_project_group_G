@@ -1,4 +1,4 @@
-function [val,error] =QUAD_ext(S_0,r,sig,X,T,Dc,K)
+function [val,error] =QUAD(S_0,r,sig,X,T,Dc,K)
 
 
 t=0;
@@ -9,7 +9,7 @@ x = log(S_0/X);
 % ymin = -10;
 
 b = log(X/X);
-ymax = 100*log(S_0);
+ymax = 100;
 
 delta_y = delta_t^0.5/K;
 N_x= floor((ymax-b)/delta_y);
@@ -38,11 +38,11 @@ f_4=diff(f,y,4);
 % y1=0:1:20;
 
 % y1=exp(1):0.1:20;
-y1=0:0.1:ymax;
+y1=0:0.5:ymax;
 
 
 f_4d=subs(f_4,y,y1);
-% plot(y1,f_4d,':b')
+plot(y1,f_4d,':b')
 max_1= max(f_4d);
 
 

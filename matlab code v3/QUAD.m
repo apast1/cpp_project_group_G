@@ -5,10 +5,10 @@ t=0;
 delta_t = T-t;
 k= 2 * (r-Dc)/sig^2 -1;
     
-x = log(S_0/X);
+x = log(S_0);
 % ymin = -10;
 
-b = log(X/X);
+b = log(X);
 ymax = 100*log(S_0);
 
 delta_y = delta_t^0.5/K;
