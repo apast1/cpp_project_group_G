@@ -7,9 +7,9 @@ S_0 = 10;
 r = 0.1;
 sig = 0.4;
 X = 15;
-T = 0.1;
-Dc=0;
+T = 0.5;
 
+Dc=0;
 t=0;
 delta_t = T-t;
 
@@ -55,6 +55,4 @@ delta_y2=delta_y;
 
 Vext = (delta_y1^4*V2 - delta_y2^4*V1) / (delta_y1^4 - delta_y2^4)
 
-[Call, Put] = blsprice(S_0, X, r, T, sig, Dc);
-
-error = Vext - Call
+[Call, Put] = blsprice(S_0, X, r, T, sig, Dc)
