@@ -1,23 +1,34 @@
-function [val,error] =QUAD(S_0,r,sig,X,T,Dc,K)
+function [val,error] =QUAD_br(K,M)
+
 
 
 t=0;
-dt = T-t;
+dt = (T-t) / (M-1);
+
 k= 2 * (r-Dc)/sig^2 -1;
-    
 x = log(S_0/X);
-% ymin = -10;
-
-b = log(X/X);
 
 
-% ymax = 100*log(S_0);
+b=zeros(M);
+
+b1=0;
+
+
+
+
+
+[val,error] =QUAD(S_0,r,sig,X,T,Dc,K)
+
+for i = (M-1):2
+    
+
+ymax = log(S_0/X) - 10*sig*sqrt(dt);
+ymax = log(S_0/X) + 10*sig*sqrt(dt); % Upper bound of integration range to approximate inf
+
 
 dy = dt^0.5/K;
-% dy = sqrt(dt) / 4;
 
 
-ymax = log(S_0/X) + 10*sig*sqrt(dt); % Upper bound of integration range to approximate inf
 N_x= round((ymax-b)/dy) ;
 
 
@@ -68,8 +79,7 @@ y1=0:0.1:ymax;
 
 
 f_4d=subs(f_4,y,y1);
-figure()
-plot(y1,f_4d,':b')
+% plot(y1,f_4d,':b')
 max_1= max(f_4d);
 
 
