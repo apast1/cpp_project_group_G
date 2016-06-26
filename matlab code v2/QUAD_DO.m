@@ -3,8 +3,8 @@ dt = T/M;
 k= 2 * (r-Dc)/sig^2 -1;
 BAR(M)=max(BAR(M), E);
 dy = sqrt(dt)/4;
-for j = M:0
-    if j<0
+for j = M+1:1
+    if j>1
         ymax = log(S/E) + 10 sig* sqrt(j*dt);
     end
     
@@ -12,15 +12,15 @@ for j = M:0
     Nplus(j) = around((ymax-b(j))/dy);
 end
 
-Nplus(0)=0;
+Nplus(1)=0;
 
 V = zeros(max(Nplus))
-for j=M:0
+for j=M+1:1
     V1 = V
     for i = 1:Nplus(j)
-        for ii=0,1
-            x = b(j)+(i+0.5*ii)*dy
-            if j==0
+        for ii=[1,2]
+            x = b(j)+(i+0.5* (ii-1) )*dy
+            if j==M+1
                 x = log(S/E)
             else
             
@@ -32,9 +32,9 @@ for j=M:0
 
                 for iii = iplus:-1:iminus
 
-                    for iv = 1,0,-1
+                    for iv = [2,1]
 
-                        y = b(j+1) + (iii + 0.5*iv) *dy
+                        y = b(j+1) + (iii + 0.5* (iv-1) ) *dy
                         Bxy = exp(-(x-y)^2/(2*sig^2*dt) + 1/2*k*y)
                         f = Bxy * V1(iii,iv)
                         int = int + (dy/6) * (2+ 2 * iv)*f
@@ -45,7 +45,7 @@ for j=M:0
             
             end
             
-            if j=0
+            if j=1
                 break
             end
         end
