@@ -17,11 +17,11 @@ for i=1:16
     r = test_matrix(i,3);
     T = test_matrix(i,4);
     [val,error]=QUAD(S_0,r,sig,X,T,Dc,K);
-    [Call, Put] = blsprice(S_0, X, r, T, sig, Dc);
-    val1 = Call;
+%     [Call, Put] = blsprice(S_0, X, r, T, sig, Dc);
+%     val1 = Call;
     val_m(i)=val;
     error_m(i)=error;
-    r(i)=val-val1;
+%     r(i)=val-val1;
 end
 
 RMSE = std(error_m)
