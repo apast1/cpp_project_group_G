@@ -1,4 +1,4 @@
-% function val = QUAD_DO(S,E,bar,sig,r,Dc,T,M)
+% function val = QUAD_DO_2(S,E,bar,sig,r,Dc,T,M)
 % val = QUAD_DO(AssetPrice,Strike,bar,Sigma,r,Dc,4,10)
 
 S = 100;
@@ -8,7 +8,7 @@ sig = 0.1;
 Dc = 0;
 r = 0.05;
 T = 4;
-M =100;
+M =200;
 
 
 dt = T/M;
@@ -19,7 +19,7 @@ dy = sqrt(dt)/4;
 b=[];
 for j = (M+1):-1:1
     if j>1
-        ymax = log(S/E) + 10 * sig* sqrt( (j-1) *dt);
+        ymax = log(S/E) + 10 * sig* sqrt(j*dt);
     end
     
     b(j) = log(bar(j)/E);
@@ -28,14 +28,15 @@ end
 
 Nplus(1)=0;
 
-V = zeros(max(Nplus),2);
+V = zeros(1,2*max(Nplus));
 for j=M+1:-1:1
     V1 = V;
-    for i = 1:Nplus(j)
-        for ii=[1,2]
-            x = b(j)+(i+0.5* (ii-1) )*dy;
+    for i = 1:2*Nplus(j)
+
+            x = b(j)+(i*0.5 )*dy;
+            
             if j==M+1
-                V(i,ii) = E * (exp(x) -1  ) ;
+                V(i) = E * (exp(x) -1  ) ;
                 
             else
                 if j==1
@@ -47,25 +48,25 @@ for j=M+1:-1:1
                 iminus = max (round ((x - qstar -b(j+1)  ) / dy) , 1);
                 int = 0;
 
-                for iii = iplus:-1:iminus
+                for iii = 2*iplus:-1:2*iminus
 
-                    for iv = [2,1]
+%                     for iv = [2,1]
 
-                        y = b(j+1) + (iii + 0.5* (iv-1) ) *dy;
+                        y = b(j+1) + (iii * 0.5 ) *dy;
                         Bxy = exp(-(x-y)^2/(2*sig^2*dt) + 1/2*k*y);
-                        f = Bxy * V1(iii,iv);
-                        int = int + (dy/6) * (2+ 2 * (iv-1))*f;
-                    end
+                        f = Bxy * V1(iii);
+                        int = int + (dy/6) *f;
+%                     end
                 end
 
-                V(i,ii) = A*(int - (dy/6)*f);
+                V(i) = A*int;
             
             end
             
             if j==1
                 break
             end
-        end
+
     end
 end
 

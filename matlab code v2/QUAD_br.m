@@ -3,9 +3,11 @@ function [val,error] =QUAD_br(K,M)
 
 
 t=0;
-dt = (T-t) / (M-1);
+dt = (T-t) / M;
 
 k= 2 * (r-Dc)/sig^2 -1;
+
+
 x = log(S_0/X);
 
 
