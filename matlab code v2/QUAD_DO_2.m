@@ -8,7 +8,7 @@ sig = 0.1;
 Dc = 0;
 r = 0.05;
 T = 4;
-M =5;
+M =10;
 
 
 dt = T/M;
@@ -84,7 +84,7 @@ for j=M+1:-1:1
 end
 
 val = V(1);
-            val
+val
   
             
             
