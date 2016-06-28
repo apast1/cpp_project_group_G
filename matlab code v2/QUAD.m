@@ -22,14 +22,10 @@ N_x= round((ymax-b)/dy) ;
 
 
 
-Inv =0;
-% for i=1:N_x - 1
-%     Inv = Inv + (2*B_func(x,i*dy,sig,dt,k) * payoff_func(X,i*dy) + 4*B_func(x,(i+1/2)*dy,sig,dt,k) * payoff_func(X,(i+1/2)*dy));
-% end
-% Remain = B_func(x,0,sig,dt,k) * payoff_func(X,0) + B_func(x,dy/2,sig,dt,k) * payoff_func(X,dy/2) +  B_func(x,N_x * dy,sig,dt,k) * payoff_func(X,ymax);
+Int =0;
 
 for i=1:N_x - 1
-    Inv = Inv + (2*f_func(x,i*dy,sig,dt,k,X) + 4*f_func(x,(i+1/2)*dy,sig,dt,k,X)) ;
+    Int = Int + (2*f_func(x,i*dy,sig,dt,k,X) + 4*f_func(x,(i+1/2)*dy,sig,dt,k,X)) ;
 end
 
 Remain = f_func(x,0,sig,dt,k,X) + 4 * f_func(x,dy/2,sig,dt,k,X) +  f_func(x,N_x * dy,sig,dt,k,X);
@@ -37,7 +33,7 @@ Remain = f_func(x,0,sig,dt,k,X) + 4 * f_func(x,dy/2,sig,dt,k,X) +  f_func(x,N_x 
 A = exp( (-0.5*k*x-0.125*dt*(sig*k)^2-r*dt) ) / sqrt(2*pi*dt*sig^2);
 % A = exp(  -0.5*k*x-0.125*(sig*k)^2*dt - r*dt)  /(2*sig^2*pi*dt)^(1/2);
 
-V = A/6 * dy * (Inv + Remain);
+V = A/6 * dy * (Int + Remain);
 
 % V = A_func(x,sig,dt,k,r)/6 * dy * (Inv + Remain);
     

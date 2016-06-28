@@ -8,13 +8,13 @@ sig = 0.1;
 Dc = 0;
 r = 0.05;
 T = 4;
-M =100;
+M =5;
 
 
 dt = T/M;
 k= 2 * (r-Dc)/sig^2 -1;
 bar = ones(1,M+1)*bar;
-bar(M+1)=max(bar(M+1), E);
+bar(end)=max(bar(end), E);
 dy = sqrt(dt)/4;
 b=[];
 for j = (M+1):-1:1
@@ -30,10 +30,12 @@ Nplus(1)=0;
 
 V = zeros(max(Nplus),2);
 for j=M+1:-1:1
+% for j=M+1
+
     V1 = V;
-    for i = 1:Nplus(j)
+    for i = 1:Nplus(j)+1
         for ii=[1,2]
-            x = b(j)+(i+0.5* (ii-1) )*dy;
+            x = b(j)+( (i-1) +0.5* (ii-1) )*dy;
             if j==M+1
                 V(i,ii) = E * (exp(x) -1  ) ;
                 
@@ -73,7 +75,7 @@ val = V(1,1);
             
             
             
-            
+val
             
             
             
