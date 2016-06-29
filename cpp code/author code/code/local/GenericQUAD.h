@@ -60,7 +60,8 @@ double SubIntegral(double Value, double Time, LVProcess& Proc, Grid* GridPts)
 		}
 		
 		unsigned long iN = iPlus-iMinus+1;
-		double Fact[iN]  Dent[iN];
+		double Fact[iN];
+		double Dent[iN];
 		# pragma omp parallel
 		{
 			# pragma omp for nowait

@@ -1,11 +1,11 @@
-Sigma           = 0.1;
+Sigma           = 0.2;
 AssetPrice      = 100;
 OptSpec         = 'call';
-Strike          = 105;
-Settle          = '01-Jan-2003';
-ExerciseDates   = '01-jan-2007';
+Strike          = 95;
+Settle          = '01-July-2003';
+ExerciseDates   = '01-jan-2004';
 BarrierSpec     = 'DO'; % up and in
-Barrier         = 98;
+Barrier         = 70;
 AmericanOpt     = 0;
 DividendType    = []; 
 DividendAmounts = 0;
@@ -13,11 +13,11 @@ ExDividendDates = [];
 
 StockSpec       = stockspec(Sigma, AssetPrice, DividendType, ...
                   DividendAmounts, ExDividendDates);
-RateSpec        = intenvset('Rates', 0.05, 'StartDates', '01-Jan-2003', ...
-                  'EndDates', '01-Jan-2007', 'Compounding', -1);
+RateSpec        = intenvset('Rates', 0.06, 'StartDates', '01-July-2003', ...
+                  'EndDates', '01-Jan-2004', 'Compounding', -1);
 
-ValuationDate   = '1-Jan-2003';
-Maturity        = '01-Jan-2007';
+ValuationDate   = '1-July-2003';
+Maturity        = '01-Jan-2004';
 
 
 TimeSpecCRR     = crrtimespec(ValuationDate, Maturity, 100);
@@ -34,10 +34,12 @@ PriceEQP        = barrierbyeqp(EQPTree, OptSpec, Strike, Settle, ...
               
               
 bar = Barrier;
-r= 0.05;
-T=4;
+r= 0.06;
+T=0.5;
 Dc =0;
-M=10;
+M=30;
+K=100;
 
-V1=DOC_MC(AssetPrice,Strike,r,Sigma,Dc,T,bar,10,1000)
-val = QUAD_DO(AssetPrice,Strike,bar,Sigma,r,Dc,T,100)
+V1=DOC_MC(AssetPrice,Strike,r,Sigma,Dc,T,bar,M,1000)
+val = QUAD_DO_2_dubug(AssetPrice,Strike,bar,Sigma,r,Dc,T,M,K)
+% val1 = QUAD_DO(AssetPrice,Strike,bar,Sigma,r,Dc,T,M,K)

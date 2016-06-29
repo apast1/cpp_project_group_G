@@ -1,21 +1,21 @@
-% function val = QUAD_DO(S,E,bar,sig,r,Dc,T,M)
+function val = QUAD_DO(S,E,bar,sig,r,Dc,T,M,K)
 % val = QUAD_DO(AssetPrice,Strike,bar,Sigma,r,Dc,4,10)
 
-S = 100;
-E = 105;
-bar = 98;
-sig = 0.1;
-Dc = 0;
-r = 0.05;
-T = 4;
-M =10;
+% S = 100;
+% E = 105;
+% bar = 98;
+% sig = 0.1;
+% Dc = 0;
+% r = 0.05;
+% T = 4;
+% M =2;
 
 
 dt = T/M;
 k= 2 * (r-Dc)/sig^2 -1;
 bar = ones(1,M+1)*bar;
 bar(end)=max(bar(end), E);
-dy = sqrt(dt)/4;
+dy = sqrt(dt)/K;
 b=[];
 for j = (M+1):-1:1
     if j>1
@@ -30,7 +30,7 @@ Nplus(1)=0;
 
 V = zeros(max(Nplus),2);
 for j=M+1:-1:1
-% for j=M+1
+% j=M+1
 
     V1 = V;
     for i = 1:Nplus(j)+1
