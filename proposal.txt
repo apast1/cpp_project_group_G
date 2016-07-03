@@ -1,0 +1,41 @@
+1.1. The proposal
+The proposal outlines in some detail the proposed project. It must contain
+i) A brief review of relevant literature assessing the contribution of the seed paper.
+ii) A clear,  precise,  and full statement of the algorithm to be implemented.
+iii) A clear statement of the aims of the project,  for instance the applications you intend to apply it to,  in the form of research questions.
+iv) A draft timetable for implementation and application of the algorithm leading to submission. 
+The proposal should be between 2000 and 3000 words  Although it is assessed it is also intended to be a working document.  It is critically important that groups construct a well-thought out proposal.  Groups must establish a clear idea of what they will be doing over the succeeding weeks.  The quality of the proposal is likely to determine the
+quality of the project as a whole.To construct a proposal the groups must
+i) Read around the seed paper to construct a brief literature review.   Groups must identity related work written both before and after the seed paper was published.  Only work very closely related to project need be
+investigated.
+ii) Be able to describe precisely the algorithm they are to implement.
+iii) Decide exactly what they intend to implement and their purpose in in doing so.  This does not have to be exactly what is described in the seed paper but can derive from it.  The description of the algorithm should be mathematical.
+iv) Construct an outline time line leading up to a successful submission by the deadline,  indicating how work might be divided between the group members.  This constitutes the group’s plan for achieving the aims of the project.
+It is during the three weeks allocated to writing the proposal that groups must overcome any mathematical issues associated with their understanding of the algorithm described in the seed paper.  They must acquaint themselves with any less familiar mathematics,  either through their own reading or in conversation with staff,  to be in a position to understand the algorithm in detail.  If a group is unable to comprehend fully the method they are to implement,  within three weeks,  this could jeopardize their chances of implementing it successfully.  Groups should take in account the mathematical complexity of the seed papers in making their project nominations.  (Note that it need not be necessary for groups to derive results presented in the paper.)  
+／／XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+1.文献综述 包括种子文件的前后相关文献
+2.算法实现  算法的流程图
+2.1 bsm model
+2.2 clv model
+2.3 quadrature model
+3.课题目标 算法应用到哪些方面（）不用和文献里的一模一样
+ 文献中的应用 
+ 3.1百慕大期权
+3.1.1 期权价格计算
+3.1.2 期权误差计算
+3.1.3 计算时间
+3.2 barrier 期权
+3.2.1 期权价格计算
+3.2.2 期权误差计算
+3.2.3 计算时间
+4 我们可以拓展的应用
+例如美式永久期权，strike 期权 rate 期权， Russian 期权等。
+ 写出具体应用的算法
+以及实现的目标（价格 误差 计算时间）
+5.compare and analysis
+5.1对比3个算法之间 以及和现存算法之间的优劣性（根据误差以及计算时间）
+5.2分析对于不同种类的期权，采用何种算法定价更为有效
+5.3  bench marking
+ mar
+6.时间规划 算法的实现和应用
