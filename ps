@@ -1,0 +1,723 @@
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+% ID:1552057, I use sharelatex to compile my latex code.
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+
+\documentclass[12pt]{article}
+
+% \documentclass{ctexart}
+ 
+
+
+
+\usepackage[top=2.0cm,bottom=2.0cm,left=2.1cm,right=2.1cm]{geometry}
+\usepackage{natbib}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{multirow}
+\usepackage{float}
+
+\usepackage{CJKutf8}
+
+
+
+\setlength\parindent{0em}
+\setlength{\parskip}{5pt}
+
+\title{Proposal of The CPP Project}
+\author{WeiShi Chen, JiaqiRen , XuehuiZhang}
+% \qquad  ID:1552057
+\date{}
+
+% % % % % % % % % % % %
+% for Chinese
+% % % % % % % % % % % %
+
+
+
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+
+\begin{document}
+% \tableofcontents
+\maketitle
+
+
+\begin{CJK*}{UTF8}{gbsn}
+
+\section{Literature Review}
+
+1、MC（随机方法）, 树方法，有限元方法（偏微分），有限元方法（QUAD）方法比较综述。
+
+2、Local、Stochastic volatility models 模型综述。
+
+3、BSE，CEV，quadrature 模型综述。
+
+4、Heston's，SABR模型综述。
+
+5、期权定价基本模型假设。
+
+\section{Model algorithm}
+
+
+\subsection{QUAD in One Dimension}
+
+
+QUAD is alike TREE method, is a sampling method from maturity to initial time. .....
+
+\subsubsection{Quadrature Solution For BSE}
+
+
+\begin{equation}
+ \frac{\partial V}{\partial t}
++ \frac{\sigma^2 S^2}{2} \frac{\partial^2 V}{\partial S^2}
++ r S \frac{\partial V}{\partial S} - rV = 0 \label{eq:BS}
+\end{equation}
+
+
+
+\begin{equation}
+x = log (S_t))
+\end{equation}
+
+
+\begin{equation}
+y = log (_{t + \Delta t}
+\end{equation}
+
+\begin{equation}
+V(S,t)=A(x) \int_{-\infty }^{\infty}B(x,y)V(y,t+\Delta t)dy
+\end{equation}
+
+\begin{equation}
+A(x) = \frac{1}{\sigma \sqrt{2\pi\Delta t }}exp(-\frac{kx}{2} - \frac{(\sigma k)^{2}\Delta t}{8}-r\Delta t)
+\end{equation}
+
+
+\begin{equation}
+B(x,y)=exp(-\frac{(x-y)^{2}}{2\sigma^{2}\Delta t}+\frac{ky}{2})
+\end{equation}
+
+
+\begin{equation}
+k = \frac{2(r-D_c)}{\sigma^{2}}-1
+\end{equation}
+
+denote 
+\begin{equation}
+f(x,y)=B(x,y)V (y,t+\Delta t)
+\end{equation}
+
+
+\begin{equation}
+V(S,t)=A(x) \int_{-\infty }^{\infty}f(x,y)dy
+\end{equation}
+
+\subsubsection{Composite Simpson's Rule}
+
+\begin{equation}
+L(f)=\int_{a}^{b}f(y)dy
+\end{equation}
+
+\begin{equation}
+\widetilde{L(f)}=\frac{\delta y}{6}(f(a) +2\sum_{j=1}^{N-1}f(y_{2j}) + 4\sum_{j=0}^{N-1}f(y_{2j+1})+f(b))
+\end{equation}
+
+\begin{equation}
+\delta y = \frac{b-a}{N}
+\end{equation}
+
+
+\begin{equation}
+y_{i}=a+\frac{\delta y}{2}\cdot i     \qquad  i=0,1,...,2N
+\end{equation}
+
+
+\begin{equation}
+E_{N,2}(f)=L(f)-\widetilde{L(f)}=-\frac{b-a}{180}(\frac{\delta y}{2})^{4}\cdot f^{(4)}(\xi )  \qquad \xi\in (a,b)
+\end{equation}
+
+
+\begin{equation}
+\end{equation}
+
+\subsubsection{Sampling Method and Grid Schedule}
+
+
+We Sampling from the maturity time to present time.
+
+\begin{equation}
+T_{m}=t+m\Delta t \qquad m=0,1,...,M
+\end{equation}
+
+\begin{equation}
+\Delta t = \frac{T-t}{M}
+\end{equation}
+
+On each time $T_{m}$, we have to pricing the option by sampling from previous time  $T_{m+1}$. The realm of sampling is the integral realm. It is suggest that
+
+\begin{equation}
+ y_{m}^{max}= x_{0}+10\sigma\sqrt{T_m-t}
+\end{equation}
+
+\begin{equation}
+ y_{m}^{min} = x_{0}-10\sigma\sqrt{T_m-t}
+
+\begin{equation}
+x_{0} = log(S_{t}) \qquad \delta y = \sqrt{\Delta t}/K  \qquad where \quad \Delta t = T-t  
+\end{equation}
+
+
+
+$K$ could be seen as the step of the algorithm .
+
+If denote the discontinuity boundary is $b_{m}$, then the nodes can be defined as
+
+
+\begin{equation}
+N_{m}^{+} = \frac{ y_{m}^{max}-b_{m}}{dy/2}
+\end{equation}
+
+\begin{equation}
+N_{m}^{-} = \frac{b_{m}- y_{m}^{min}}{dy/2}
+\end{equation}
+
+\begin{equation}
+x_{m,j} = b_{m} + \frac{\delta y}{2} \cdot j  \qquad \quad j\in[N^-,N^+]
+\end{equation}
+
+For each nodes in $T_{m}$, it needs sampling such nodes in $T_{m+1}$
+
+\begin{equation}
+y_{i}^{m,j} = b_{m+1}+ \frac{\delta y}{2} \cdot i \qquad \quad i\in[I_{m,j}^{-},I_{m,j}^{+}]
+\end{equation}
+
+where
+
+\begin{equation}
+I_{m,j}^{+} = min(\widehat{I_{m,j}^{+}}, N_{m+1}^+)
+\end{equation}
+
+\begin{equation}
+I_{m,j}^{-} = max(\widehat{I_{m,j}^{-}}, N_{m+1}^-)
+\end{equation}
+
+
+\begin{equation}
+\widehat{I_{m,j}^{+}}   = \frac{x_{j}+10\sigma\sqrt{\Delta t_{m}}-b_{m}}{dy/2}
+\end{equation}
+
+
+\begin{equation}
+\widehat{I_{m,j}^{-}} = \frac{x_{j}-10\sigma\sqrt{\Delta t_{m}}-b_{m}}{dy/2}
+\end{equation}
+
+
+
+1. We start on $t_M$ to calculate the option value on every nodes.
+2. then calculate the boundary for $t_{M-1}$ by sampling $t_M$ nodes.
+3. then generate the grid for  $t_{M-1}$, and calculate the option value on every nodes.
+4. till $t_0$,we do not need to Step 2 and Step 3 but we also choose to sampling selected nodes rather than all nodes on $t_1$ to valuate $V_0$
+
+
+\subsubsection{Boundary Algorithm}
+
+Discontinuity boundary of some option would easy while for some exotic option we need some algorithm.
+
+For American options, option can be excised early, so the time nodes before maturity have to be valuated by comparing the value of the option and the payoff at that time. This is also the reason why dividing the nodes into two parts. One is above $b_{m}$, other is below.
+
+\begin{equation}
+V(t_{m},x_j)=max(\widetilde{V(t_{m},x_j)},Payoff(t_{m},x_j))
+\end{equation}
+
+where
+\begin{equation}
+\widetilde{V(t_{m},x_j)}=\sum_{i=I_{m,j}^{-}}^{I_{m,j}^{+}}f_{simpson}(V(t_{m+1},x_i))
+\end{equation}
+
+Define
+\begin{equation}
+g(x) = \widetilde{V(t_{m},x)}-Payoff(t_{m},x)
+\end{equation}
+$b_{m}$ is the solution of $g(x) = 0$ , We use Newton-Raphson iteration method, to compute $b_{m}$
+
+\begin{equation}
+b_{m,new}=b_{m,old}+\Delta b_{m,new}
+\end{equation}
+
+\begin{equation}
+\Delta b_{m,new} = \frac{-\Delta b_{m,old}g(b_{m,new})}{g(b_{m,new})-g(b_{m,old})}
+\end{equation}
+
+For different option the initial condition $b_{m,0}$ and $\Delta b_{m,0}$ should be specified.
+
+\subsection{QUAD in 2 Dimension}
+
+
+\subsection{Quadrature Solution in 2D}
+
+\begin{equation}
+V(x_1,x_2,t)=C(\sigma _1,\sigma _2,R) \int_{-\infty }^{\infty}\int_{-\infty }^{\infty}B(x_1,x_2,y_1,y_2)V(y_1,y_2,t+\Delta t)dy_1dy_2
+\end{equation}
+
+where
+\begin{equation}
+C(\sigma _1,\sigma _2,R)=(2 \pi \Delta t)exp(-r\Delta t)\left | R \right |^{-1/2}(\sigma _1\sigma _2)^-1
+\end{equation}
+
+\begin{equation}
+B(x_1,x_2,y_1,y_2) = exp(-\frac{1}{2}\alpha _i^TR^-1\alpha _i)
+\end{equation}
+
+\begin{equation}
+\alpha _i = \frac{x_i-y_i+(r-D_i-\sigma _i^2/2)\Delta t}{\sigma _1\Delta t^{1/2}} , \qquad R=\left \{ \rho_{ij} \right \}
+\end{equation}
+
+Now we expand the line grids into a 2D plain grids. To be more specified in the integral, the integral realm also can be divided by boundary conditions. It would not be a point any more but a curve. Since there are two variables, in order to specify it, We have to keep one of them constant.
+
+Assume the boundary condition curve is $y_1=b_m(y_2)$
+
+Then,
+
+
+% 1、QUAD 算法 及流程图
+
+% 2、积分方法，Gird 生成
+
+% 3、Local：三种 Stochastic 两种 模型的 process class
+
+% 4、不同期权（Down-and-out barrier options,Bermudan options）的 边界条件Bm
+
+% 5、Benchmark
+\section{Aims of The Project}
+
+1、QUAD算法对同模型下，不同期权（参数）的稳定性（RSME 小）
+
+2、QUAD算法对复杂模型的适用性（会不会大福增加时间）
+
+3、QUAD算法在收敛速度和精度方面，与MC，树方法的比较。
+
+\section{Timetable}
+
+
+
+\end{CJK*}
+
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+
+% \section{Data Preprocessing}
+
+% \subsection{Data information}
+%  The dataset is large in size with 4177 cases. There are 9 attributes in each case of the dataset showed in Table \ref{tab:ai}:
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{|c|c|c|c|}
+% \hline
+% Name           & Data Type  & Meas.                & Description                  \\ \hline
+% Sex            & nominal    & M, F, and I (infant) &                              \\ \hline
+% Length         & continuous & mm                   & Longest shell measurement    \\ \hline
+% Diameter       & continuous & mm                   & perpendicular to length      \\ \hline
+% Height         & continuous & mm                   & with meat in  shell          \\ \hline
+% Whole weight   & continuous & grams                & whole  abalone               \\ \hline
+% Shucked weight & continuous & grams                & weight  of meat              \\ \hline
+% Viscera weight & continuous & grams                & gut  weight (after bleeding) \\ \hline
+% Shell weight   & continuous & grams                & after  being dried           \\ \hline
+% Rings          & integer    &                      & +1.5 gives the age in  years \\ \hline
+% \end{tabular}
+% \caption{Attribute Information}
+% \label{tab:ai}
+% \end{table}
+
+% Orginally, the users of this data want to use the first 8 attributes to predict the age of abalone for these physical measurements are easy to observer whihe the rings is not, which people could use to plus 1.5 to get the age of abalone.
+
+% So, I will do this again. Afterwards, for seeking deep in the data, I will predict the sex of abalone with using remaining 7 attributes without sex.
+
+% \subsection{Data labeling and Preprocessing}
+
+% I take the data source file ``Dataset.data" in the directory $abalone$ to construct two pairs data sets:
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{cc}
+% \hline
+% \multicolumn{1}{|c|}{rings.dat}           & \multicolumn{1}{c|}{only column No. 9 (rings) of the Dataset.data} \\ \hline
+% \multicolumn{1}{|c|}{data\_no\_rings.dat} & \multicolumn{1}{c|}{the remaining columns No. 1-8 of Dataset.data} \\ \hline
+% \multicolumn{1}{l}{}                      & \multicolumn{1}{l}{}                                               \\ \hline
+% \multicolumn{1}{|c|}{sex.dat}             & \multicolumn{1}{c|}{only column No. 1 (Sex) of the Dataset.data}   \\ \hline
+% \multicolumn{1}{|c|}{data\_no\_sex.dat}   & \multicolumn{1}{c|}{the remaining columns No. 2-8 of Dataset.data} \\ \hline
+% \end{tabular}
+% \caption{Processing Dataset}
+% \label{my-label}
+% \end{table}
+
+% 1. For the Sex attribute is nominal, convert it into discrete dummy variable. By assigning female, infant and male into value -1, 0, 1 respectively. See Table \ref{tab:sex}:
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{|c|c|l|}
+% \hline
+% Class  & Label \& Value & Mark    \\ \hline
+% Infant & 0              & green * \\ \hline
+% Female & -1             & red +   \\ \hline
+% Male   & 1              & blue o  \\ \hline
+% \end{tabular}
+% \caption{Sex Labeling}
+% \label{tab:sex}
+% \end{table}
+
+% 2. Rings is continuous variable, thus for representing(marking) it in the 2D figure, it has to be discrete i.e labeled. See See Table \ref{tab:rings}
+
+
+
+
+% \begin{table}[H]
+% \centering
+
+% \begin{tabular}{|c|c|c|c|}
+% \hline
+% Class      & Label \& value & Mark         & Define                         \\ \hline
+% Few        & 1     & green *      & 0 \textless  rings \leq 6.5    \\ \hline
+% Medium     & 2     & blue o       & 6.5 \textless  rings \leq 10.5 \\ \hline
+% Many       & 3     & red +        & 10.5 \textless  rings \leq 14  \\ \hline
+% Great Many & 4     & black square & 14 \textless rings             \\ \hline
+% \end{tabular}
+% \caption{Rings Labeling}
+% \label{tab:rings}
+% \end{table}
+
+
+
+
+% Table \ref{tab:obs1} and Table \ref{tab:obs2} shows the final data preprocessing with first 5 observations.
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+% \hline
+%                                       & \multicolumn{8}{c|}{data.no\_rings.dat}                       & rings.dat \\ \hline
+% Column                                & 1  & 2     & 3     & 4     & 5      & 6      & 7      & 8     & 9         \\ \hline
+% \multirow{5}{*}{First 5 observations} & 1  & 0.455 & 0.365 & 0.095 & 0.514  & 0.2245 & 0.101  & 0.15  & 15        \\ \cline{2-10} 
+%                                       & 1  & 0.35  & 0.265 & 0.09  & 0.2255 & 0.0995 & 0.0485 & 0.07  & 7         \\ \cline{2-10} 
+%                                       & -1 & 0.53  & 0.42  & 0.135 & 0.677  & 0.2565 & 0.1415 & 0.21  & 9         \\ \cline{2-10} 
+%                                       & 1  & 0.44  & 0.365 & 0.125 & 0.516  & 0.2155 & 0.114  & 0.155 & 10        \\ \cline{2-10} 
+%                                       & 0  & 0.33  & 0.255 & 0.08  & 0.205  & 0.0895 & 0.0395 & 0.055 & 7         \\ \hline
+% \end{tabular}
+% \caption{Fisrt 5 observations in dataset}
+% \label{tab:obs1}
+% \end{table}
+
+
+
+% \begin{table}[H]
+% \centering
+% \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
+% \hline
+%                                       & \multicolumn{7}{c|}{data.no\_sex.dat}                    & sex.dat \\ \hline
+% Column                                & 1     & 2     & 3     & 4      & 5      & 6      & 7     & 1         \\ \hline
+% \multirow{5}{*}{First 5 observations} & 0.455 & 0.365 & 0.095 & 0.514  & 0.2245 & 0.101  & 0.15  & 1         \\ \cline{2-9} 
+%                                       & 0.35  & 0.265 & 0.09  & 0.2255 & 0.0995 & 0.0485 & 0.07  & 1         \\ \cline{2-9} 
+%                                       & 0.53  & 0.42  & 0.135 & 0.677  & 0.2565 & 0.1415 & 0.21  & -1        \\ \cline{2-9} 
+%                                       & 0.44  & 0.365 & 0.125 & 0.516  & 0.2155 & 0.114  & 0.155 & 1         \\ \cline{2-9} 
+%                                       & 0.33  & 0.255 & 0.08  & 0.205  & 0.0895 & 0.0395 & 0.055 & 0         \\ \hline
+% \end{tabular}
+% \caption{Fisrt 5 observations in dataset}
+% \label{tab:obs2}
+% \end{table}
+
+
+
+% 3.Hist
+
+
+% In Figure \ref{fig:his}, we can view the histogram to see what the rings and sex distribution is.
+
+% \begin{figure}[H]
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{rings_hist.eps}
+% \end{minipage}%
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{rings_sex.eps}
+% \end{minipage}
+% \caption{Histogram of Rings and Sex}
+% \label{fig:his}
+% \end{figure}
+
+
+
+% \section{PCA Plot}
+
+% With the offered pca.m function in the library function directory ``NETLAB" to do PCA 2D Plot.
+
+% \subsection{Predict abalone's rings(age)}
+
+
+% \subsubsection{Eigenvalues}
+
+
+% In Figure \ref{fig:eig_rings}, one can see that most data variance about 65\% can be explained by the first eigenvector of the covariance matrix. The first 2 eigenvectors explain above 98\%  of all of the variance that is in the data. So the PCA projection onto the space of these two eigenvectors will not lose much information.
+
+
+% \begin{figure}[H]
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_eigenvalues_rings.eps}
+% \end{minipage}%
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_cumm_eig_rings.eps}
+% \end{minipage}
+% \caption{Eigenvalues of the data to predict rings}
+% \label{fig:eig_rings}
+% \centering
+% \includegraphics[scale=0.8]{abalone_pca_ring.eps}
+% \caption{PCA 2D Projection for Predict Rings}
+% \label{fig:pca_r}
+
+% \end{figure}
+
+
+
+% \subsubsection{PCA 2D Projection}
+
+
+% Figure \ref{fig:pca_r} shows PCA 2D Projection. The plot seems to look nice. But they are separated into 3 curves for the first attribute: sex. There are 3 kind of sex so in the firgure they are represented by 3 separated curves.
+% Moreover, we can find that the X axis values are almost -1, 0 and -1.
+
+% Besides, when the y axis value get higher, it is more possible to say abalone is older. ``Few" certainly can be predicted and ``Medium'' can be said predictable while others seems to be overlap and not be very possible to be identified. The fact is that when it get older, its physical measurements(other attributes) are not determinate.
+
+% One can show that without the sex attribute the PCA 2D projection would be formed into one curve and be better. I will do it in the last part.
+
+
+
+% \subsection{Predict abalone's sex}
+
+
+% \subsubsection{Eigenvalues}
+
+% In Figure \ref{fig:eig_sex}, almost all data variance can be explained by the first eigenvector of the covariance matrix. The first 2 eigenvectors can also explain \% above 98 of all of the variance that is in the data.
+
+
+% \begin{figure}[H]
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_eigenvalues_sex.eps}
+% \end{minipage}%
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_cumm_eig_sex.eps}
+% \end{minipage}
+% \caption{Eigenvalues of the data to predict sex}
+% \label{fig:eig_sex}
+% \centering
+% \includegraphics[scale=0.5]{abalone_pca_sex.eps}
+% \caption{PCA 2D Projection for Predict Sex}
+% \label{fig:pca_s}
+
+% \end{figure}
+
+
+% \subsubsection{PCA 2D Projection}
+
+
+% Figure \ref{fig:pca_s} shows PCA 2D Projection. It seems to be reasonable female and male are overlap for the fact that the other attributes do not so much depend on it is male or female while they are depend on it is mature or not. So infant is not overlap. Besides, actually, male is everywhere, they are covered by high density green marks. The fact indicates that the male's value of other attributes are not limited while the female's are more possible be.
+
+
+% Moreover, since the first eigenvector of the covariance matrix is very high, we may simply use 1D PCA projection to show the result.
+
+
+
+
+% \section{Coordinate Projections}
+
+% Pick two coordinates and make a 2-dimensional plot of the data set by plotting for each point only these coordinates is a simple method of obtaining 2-dimensional plots of high-dimensional data. The following Figure \ref{fig:co_rings} shows the coordinate projection of the 8-dimensional data set onto coordinates X1=2, X2=5 and X1=3, X2=4.
+
+
+
+% \begin{figure}[H]
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.45]{rings_coordproj_2_5.eps}
+% \includegraphics[scale=0.45]{rings_coordproj_3_4.eps}
+% \end{minipage}
+
+% \caption{Coordinate Projections for Predict Rings}
+% \label{fig:co_rings}
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.45]{sex_coordproj_1_4.eps}
+% \includegraphics[scale=0.45]{sex_coordproj_2_3.eps}
+% \end{minipage}
+
+% \caption{Coordinate Projections for Predict Sex}
+% \label{fig:co_sex}
+
+
+% \end{figure}
+
+% Figure \ref{fig:co_rings} shows that they are both highly predictive/informative of the abalone's rings.
+
+% Figure \ref{fig:co_sex} indicates that male and female  are also overlap.
+
+
+% Note that the attributes of X1=1, X2=4 and X1=3, X2=4. in $data.no\_sex.dat$ are the same with that in $data.no\_rings.dat$. Comparing Figure \ref{fig:co_sex} and Figure \ref{fig:co_rings} shows that they have same form. For example, if its sex is infant, it must be in young age(has few rings).
+
+
+% \section{Further Data Preprocessing}
+
+% \subsection{Normalization}
+
+
+% There is a problem with the plots presented so far is that the 8 or 7 features of  $data\_no\_rings.dat$ and $data\_no\_sex.dat$ live at different scales. Some vary by a small amount, some have a large variation.
+
+% One simple option of dealing with this problem is to centre the data around the origin and then rescale the coordinates so that each coordinate varies in the same range. I use the Matlab function mapstd.m to normalize the data, the brief algorithm is $y = (x-xmean)*(ystd/xstd) + ymean$. Besides, mapminmax.m is another available function with different algorithm.
+
+% Figure \ref{fig:scale} shows that we no longer will have large disproportions in coordinate variation after normalization. The scale and variation of all attributes are much closer now. This will bring in better convergence speed of training and validating processing no matter in PCA model or Neural network model.
+
+
+
+
+
+% \begin{figure}[H]
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{scale_rings.eps}
+% \end{minipage}%
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{scale_rings_s.eps}
+% \end{minipage}
+% \caption{Data Scale Observation}
+% \label{fig:scale}
+% \end{figure}
+
+
+% In Figure \ref{fig:nor_rings} and Figure \ref{fig:nor_sex}, the PCA plots now give better pictures, though it makes the second cumulative eigenvalue a little smaller.
+
+
+% \begin{figure}[H]
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.6]{abalone_pca_ring_n.eps}
+% \includegraphics[scale=0.5]{abalone_cumm_eig_rings_n.eps}
+% \end{minipage}
+
+% \caption{PCA Projections for Predict Rings}
+% \label{fig:nor_rings}
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_pca_sex_n.eps}
+% \includegraphics[scale=0.5]{abalone_cumm_eig_sex_n.eps}
+% \end{minipage}
+
+% \caption{PCA Projections for Predict Sex}
+% \label{fig:nor_sex}
+
+% \end{figure}
+
+
+
+
+% In Figure \ref{fig:nco_rings} and Figure \ref{fig:nco_sex},  the coordinate projection plots are  just scaled versions of the previous ones:
+
+% \begin{figure}[H]
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.45]{rings_coordproj_n_2_5.eps}
+% \includegraphics[scale=0.45]{rings_coordproj_n_3_4.eps}
+% \end{minipage}
+
+% \caption{Coordinate Projections for Predict Rings}
+% \label{fig:nco_rings}
+
+% \begin{minipage}[t]{1\linewidth}
+% \centering
+% \includegraphics[scale=0.45]{sex_coordproj_n_1_4.eps}
+% \includegraphics[scale=0.45]{sex_coordproj_n_2_3.eps}
+% \end{minipage}
+
+% \caption{Coordinate Projections for Predict Sex}
+% \label{fig:nco_sex}
+
+% \end{figure}
+
+% \subsection{PCA 3D Plot}
+
+% In Figure \ref{fig:3d}, we can confirm that PCA projection data for predicting rings indeed live in 2D space, while this technique can be used in situation where the second cumulative eigenvalue is not very high until we need 3 eigenvectors.
+
+% \begin{figure}[H]
+% \centering
+% \includegraphics[scale=0.5]{3d.eps}
+% \caption{Coordinate Projections for Predict Rings}
+% \label{fig:3d}
+% \end{figure}
+
+
+
+
+% \subsection{PCA 2D Plot without Labeling}
+
+% Firstly, for not so good PCA plot to predict rings, I will do it again without sex attribute. The following Figure \ref{fig:nosex} shows the result. It looks much better with no separated curves. Besides, the only curve looks like 3 curves ``plus" together. Besides, it seems to be plot into 1D projection.
+
+
+
+% \begin{figure}[H]
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.5]{abalone_pca_ring_n_nosex.eps}
+% \caption{Normalized PCA 2D Plot for predicting rings without sex}
+% \label{fig:nosex}
+% \end{minipage}%
+% \begin{minipage}[t]{0.5\linewidth}
+% \centering
+% \includegraphics[scale=0.45]{nosex.eps}
+% \caption{PCA 2D Plot without Labeling}
+% \label{fig:nolab}
+% \end{minipage}
+% \end{figure}
+
+% Figure \ref{fig:nolab} shows the PCA 2D plot without labeling, this technique could be used when the deviation of  predict variable is  is very high and  predict variable is very discrete.
+
+
+% \section{Lessons Learnt}
+
+% % \subsection{General Random Numbers}
+
+% When predicting the predicting abalone's rings and sex price from the 8 or 7 dimensional data points, it is desirable to first pre-process the data by unifying the coordinate range. PCA plot is linear predictive models. It is a good model to predict variable.
+
+% Some pairs of coordinates (features) are alone quite predictive, e.g. features X1=2, Length and X=5,  whole weight.
+
+% Besides, the PCA process should have included training and validating like in Neural Network model.
+
+
+
+
+% \bibliographystyle{unsrt}
+% \bibliography{references}
+
+
+% 1.    http://www.cs.bham.ac.uk/~pxt/ida.html
+
+% \end{document}
+
+
+
+% % % % % % % % % % % % % % % % % % % % % %
+
+
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+
+% \clearpage
+\bibliographystyle{unsrt}
+\bibliography{references}
+
+\end{document}
+
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
+% END
+% % % % % % % % % % % % % % % % % % % % % %% % % % % % % % %  % % % % % % % % % % % % % % % % %
