@@ -111,3 +111,23 @@ y_{m,min} y_{m}^{min}
 I_1=\int_{y_{1}^{min}}^{y_{1}^{max}}\int_{y_{2}^{min}}^{y_{2}=b_m(y_{1})}B(x_1,x_2,y_1,y_2)*\Lambda (y_1,y_2)dy_1dy_2
 \newline
 I_2=\int_{y_{1}^{min}}^{y_{1}^{max}}\int_{y_{2}=b_m(y_{1})}^{y_{2}^{max}}B(x_1,x_2,y_1,y_2)*\Lambda (y_1,y_2)dy_1dy_2
+
+V(S,t)=A(x) \int_{-\infty }^{\infty}B(x,y)V(y,t+\Delta t)dy
+\newline
+A(x) = \frac{1}{\sigma \sqrt{2\pi\Delta t }}exp(-\frac{kx}{2} - \frac{(\sigma k)^{2}\Delta t}{8}-r\Delta t)
+\newline
+B(x,y)=exp(-\frac{(x-y)^{2}}{2\sigma^{2}\Delta t}+\frac{ky}{2})
+\newline
+k = \frac{2(r-D_c)}{\sigma^{2}}-1
+\newline
+f(x,y)=B(x,y)\Lambda (y,X)
+\newline
+
+
+V(x,t)=e^{-r\Delta t} \int_{-\infty }^{\infty}f_{\Delta t}(y|x)V(y,t+\Delta t)dy
+\newline
+
+f_{\Delta t}(y|x)=\frac{1}{y \sigma \sqrt{2\pi\Delta t}}exp[-\frac{1}{2}(\frac{ln(y)-ln(x)+(r-\sigma^2/2)\Delta t}{21})]
+\newline
+
+p_{x}^{L}(y|x)=\frac{1}{y \sigma \sqrt{2\pi\Delta t}}exp[-\frac{1}{2}(\frac{ln(y)-ln(x)+(r-\sigma^2/2)\Delta t}{21})]
