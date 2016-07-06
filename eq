@@ -108,3 +108,6 @@ y_{m,min} y_{m}^{min}
 
 \Delta b_{m,new} = \frac{-\Delta b_{m,old}g(b_{m,new})}{g(b_{m,new})-g(b_{m,old})}
 
+I_1=\int_{y_{1}^{min}}^{y_{1}^{max}}\int_{y_{2}^{min}}^{y_{2}=b_m(y_{1})}B(x_1,x_2,y_1,y_2)*\Lambda (y_1,y_2)dy_1dy_2
+\newline
+I_2=\int_{y_{1}^{min}}^{y_{1}^{max}}\int_{y_{2}=b_m(y_{1})}^{y_{2}^{max}}B(x_1,x_2,y_1,y_2)*\Lambda (y_1,y_2)dy_1dy_2
