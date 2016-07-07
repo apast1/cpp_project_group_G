@@ -147,3 +147,27 @@ P_{Y}^{L}(t,y|x)=\frac{1}{\sqrt{t}}\phi  ( \frac{y-x}{\sqrt{t}})exp[r(1-\beta)(y
 c_{0}(y|x)=1
 \newline
 c_{1}(y|x)=-\frac{r^2 (1-\beta)^2 (y^3+y^2x+yx^2+x^3)}{6}-\frac{(20r\beta^2-16r\beta-8r\beta^3+\beta^2+4r)(y+x))}{8(\beta-1)^2}-\frac{\beta}{4(\beta-1)^2yx}
+f_{\Delta t}(y|x)=P_{X}^{L}(t,y|x)=\frac{P_{Y}^{L}(t,ln\frac{y^{1-\beta}}{\sigma(1-\beta)}|\frac{x^{1-\beta}}{\sigma(1-\beta)})}{\sigma x^\beta}
+
+\newline
+
+f_{\Delta t}(y|x)=P_{X}^{L}(t,y|x)=\frac{P_{Y}^{L}(t,\frac{1}{b\sigma}ln\frac{y}{y+b}|\frac{1}{b\sigma}ln\frac{x}{x+b})}{\sigma x^\beta}
+\newline
+P_{Y}^{L}(t,y|x)=\frac{1}{\sqrt{t}}\phi  ( \frac{y-x}{\sqrt{t}})\sum_{i=0}^{2}c_{i}(y|x)\frac{t^i}{i!}exp[r(1-\beta)(y^2-x^2)+\frac{\beta}{2(\beta -1)}ln(\frac{y}{x})]
+
+\newline
+P_{Y}^{L}(t,y|x)=\frac{1}{\sqrt{t}}\phi  ( \frac{y-x}{\sqrt{t}})\sum_{i=0}^{2}c_{i}(y|x)\frac{t^i}{i!}exp(\frac{(-e^{by\sigma}+e^{bx\sigma})r}{b^2\sigma^2}+\frac{(y-x)(2r-b^2\sigma^2)}{b\sigma}+ln(\frac{1-e^{by\sigma}}{1-e^{bx\sigma}}))
+\newline
+
+c_{1}(y|x)=-\frac{r^2 (1-\beta)^2 (y^3+y^2x+yx^2+x^3)}{6}-\frac{(20r\beta^2-16r\beta-8r\beta^3+\beta^2+4r)(y+x))}{8(\beta-1)^2}-\frac{\beta}{4(\beta-1)^2yx}
+
+
+
+\newline
+P_{Y}^{L}(t,y|x)=\frac{1}{\sqrt{t}}\phi  ( \frac{y-x}{\sqrt{t}})\sum_{i=0}^{2}c_{i}(y|x)\frac{t^i}{i!}exp(\frac{(-e^{by\sigma}+e^{bx\sigma})r}{b^2\sigma^2}+\frac{(y-x)(2r-b^2\sigma^2)}{b\sigma}+ln(\frac{1-e^{by\sigma}}{1-e^{bx\sigma}}))
+\newline
+
+c_{1}(y|x)=-\frac{r^2 (1-\beta)^2 (y^3+y^2x+yx^2+x^3)}{6}-\frac{(20r\beta^2-16r\beta-8r\beta^3+\beta^2+4r)(y+x))}{8(\beta-1)^2}-\frac{\beta}{4(\beta-1)^2yx}
+\newline
+
+c_{1}(y|x)=-\frac{r^2 (e^{2by\sigma}-e^{2bx\sigma})}{4b^3\sigma^3(y-x)}-\frac{r(r+b^2\sigma^2)(e^{by\sigma}-e^{bx\sigma})}{b^3\sigma^3(y-x)}-\frac{(-2r+b^2\sigma^2)^2}{8b^2\sigma^2}
