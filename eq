@@ -171,3 +171,12 @@ c_{1}(y|x)=-\frac{r^2 (1-\beta)^2 (y^3+y^2x+yx^2+x^3)}{6}-\frac{(20r\beta^2-16r\
 \newline
 
 c_{1}(y|x)=-\frac{r^2 (e^{2by\sigma}-e^{2bx\sigma})}{4b^3\sigma^3(y-x)}-\frac{r(r+b^2\sigma^2)(e^{by\sigma}-e^{bx\sigma})}{b^3\sigma^3(y-x)}-\frac{(-2r+b^2\sigma^2)^2}{8b^2\sigma^2}
+
+
+
+V_i=X\cdot (e^{y_i}-1)    \quad i=0,1...,2N
+\newline
+y_i = bm+i \delta y
+\newline
+
+\sum_{i=2I_{m,x}^{-}}^{2I_{m,x}^{+}}f_{simpson_+}(V(t_{m+1},x_i))  =\sum_{i=0}^{2I_{m,x}^{+}}f_{simpson}(V(t_{m+1},x_i))+\sum_{i=-2I_{m,x}^{-}}^{0}(X-V(t_{m+1},x_i))
