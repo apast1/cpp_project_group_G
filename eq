@@ -180,3 +180,27 @@ y_i = bm+i \delta y
 \newline
 
 \sum_{i=2I_{m,x}^{-}}^{2I_{m,x}^{+}}f_{simpson_+}(V(t_{m+1},x_i))  =\sum_{i=0}^{2I_{m,x}^{+}}f_{simpson}(V(t_{m+1},x_i))+\sum_{i=-2I_{m,x}^{-}}^{0}(X-V(t_{m+1},x_i))
+
+
+dS_t=rS_tdt+\sqrt{v_t}dW_t^{(1)}
+\newline
+dv_t=\kappa (\theta -v_t)dt+\sigma _V\sqrt{v_t}dW_t^{(2)}
+\newline
+dW_t^{(1)}dW_t^{(1)} = \rho dt
+
+\newline
+v_t^{max}=v_t + \xi\sqrt{v_tt}
+\newline
+
+v_t^{max}=v_t - \xi\sqrt{v_tt}
+
+\newline
+
+
+x_t^{max}=x_t + (r- v_t/2)t + \xi \sqrt{v_tt}
+\newline
+x_t^{min}=x_t + (r- v_t/2)t - \xi \sqrt{v_tt}
+%	return LogAsset + (rate - 0.5*Var)*Time + Deviations*sqrt(Var)*sqrt(Time);
+% 	double Guess = vValue + Deviations*sqrt(vValue*Time);
+
+\newline
